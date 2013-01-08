@@ -1,11 +1,11 @@
 ### Blamethrower
 
-You're about to start working on a file in a Git project and don't know how it works. Or you have an entire directory to figure out. Who should talk to?
+You're about to start working on a file in a Git project and don't know how it works. Or you have an entire directory of files to suss out. Who should you talk to?
 
-Blamethrower is simple script to analyze files or directories in a Git repository and show authors and their total lines committed. 
+Blamethrower is simple script to analyze files or directories in a Git repository and show the author(s) and total lines committed by the author(s).
 
 #### Usage
-Run Blamethrower in a directory with a Git repository:
+Run Blamethrower in a directory with a Git repository. Here's an example running it on the speed/ directory in the jQuery project:
 
 ```
 $ blamethrower.rb speed/
