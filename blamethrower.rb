@@ -9,6 +9,7 @@ files.lines.each do |file|
   filecount = `git blame --line-porcelain #{file.chomp} | grep \"author \" |sort|uniq -c |sort -nr`.lines
 
   filecount.each do |line|
+    # Use rescue to handle errors from unprocesable files, like image files.
     begin 
     matchdata = line.match /(\d+)\s+author\s+(.*)/ 
     author = matchdata[2]  
