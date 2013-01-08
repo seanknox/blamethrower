@@ -5,9 +5,10 @@ You're about to start working on a file in a Git project and don't know how it w
 Blamethrower is simple script to analyze files or directories in a Git repository and show authors and their total lines committed. 
 
 #### Usage
+Run Blamethrower in a directory with a Git repository:
 
 ```
-$ ../blamethrower.rb speed/
+$ blamethrower.rb speed/
 FILE: speed/benchmark.js
 FILE: speed/benchmarker.css
 FILE: speed/benchmarker.js
