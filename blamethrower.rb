@@ -24,7 +24,7 @@ files = `git ls-tree -r HEAD #{ARGV.join(" ")}| cut -f 2`
 counthash = Hash.new {0}
 
 files.lines.each do |file|
-  puts "FILE: #{file}".green
+  print "FILE: #{file}".green
   filecount = `git blame --line-porcelain #{file.chomp} | grep \"author \" |sort|uniq -c |sort -nr`.lines
 
   filecount.each do |line|
