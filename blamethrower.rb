@@ -29,8 +29,6 @@ files = `git ls-tree -r HEAD #{ARGV.join(" ")}| cut -f 2`
 @results   = []
 pool_size  = 10
 
-counthash  = Hash.new{0}
-
 def enqueue file_name, &block
   @queue << [block, file_name]
 end
@@ -58,16 +56,15 @@ files.lines.each do |f|
     filecount = `git blame --line-porcelain #{file.chomp} | grep \"author \" |sort|uniq -c |sort -nr`.lines
     filecount.each do |line|
       begin
-        p file
         matchdata = line.match /(\d+)\s+author\s+(.*)/
         author    = matchdata[2]
         linecount = matchdata[1].to_i
 
         counthash[author] += linecount
-        print ".".green
+        print file.green
 
       rescue
-        print ".".red
+        print file.red
       end
 
     end
@@ -91,18 +88,19 @@ loop do
 end
 
 # Reduce the results
+resulthash  = Hash.new{0}
+
 @results.each do |reader|
   sub_count = JSON.parse Marshal.load(reader.read)
-  sub_count.each do |name, count|
-    counthash[name] += count
+  sub_count.each do |name, linecount|
+    resulthash[name] += linecount
   end
 end
 
-sorted_array = counthash.sort_by {|k,v| -v.to_i}
+sorted_array = resulthash.sort_by { |name, linecount| -linecount.to_i }
 
-puts '!'
 puts "Elapsed Time: #{Time.now - start_time}"
 puts "Contributors:"
 sorted_array.each do |author,lines|
-  puts "#{author}".red + ": " + "#{lines}".yellow
+  puts "#{author.red}: #{lines.to_s.yellow}"
 end
